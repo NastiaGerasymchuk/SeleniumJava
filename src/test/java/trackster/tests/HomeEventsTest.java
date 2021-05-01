@@ -1,18 +1,20 @@
 package trackster.tests;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+
+import trackster.data.*;
 import trackster.enums.Language;
 import trackster.models.HomePageTestData;
 import trackster.pages.HomePage;
+import trackster.pages.LoginPage;
+import trackster.pages.NavPage;
+import trackster.pages.ParcelInfo;
 
-import java.io.File;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.*;
@@ -82,7 +84,56 @@ public class HomeEventsTest extends BaseTest{
         assertThat(homePage.getOurPartners(),is(ourPartners));
     }
 
+    @ParameterizedTest
+    @CsvFileSource(files = trackster.data.CsvFileSource.EXISTED_PARCEL, numLinesToSkip = 1)
+    void existedParcel(String number){
+        HomePage homePage=new HomePage(driver);
+        homePage.setNumber(number);
+        ParcelInfo parcelInfo= homePage.searchParcel();
+        assertThat(parcelInfo.getParcelNumber(),is(number));
+    }
+    @ParameterizedTest
+    @CsvFileSource(files = trackster.data.CsvFileSource.NOT_EXISTED_PARCEL, numLinesToSkip = 1)
+    void notExistedParcel(String number){
+        HomePage homePage=new HomePage(driver);
+        homePage.setNumber(number);
+        ParcelInfo parcelInfo= homePage.searchParcel();
+        assertThat(parcelInfo.notFoundInfo(),is(ParserInfoLocator.NOT_FOUND_INFO));
+    }
+    @ParameterizedTest
+    @CsvFileSource(files = trackster.data.CsvFileSource.INCORRECT_PARCEL_NUMBER, numLinesToSkip = 1)
+    void incorrectParcelNumber(String number){
+        HomePage homePage=new HomePage(driver);
+        homePage.setNumber(number);
+        ParcelInfo parcelInfo= homePage.searchParcel();
+        assertThat(parcelInfo.notFoundInfo(),is(ParserInfoLocator.INCORRECT_PARCEL_NUMBER));
+    }
+    @ParameterizedTest
+    @CsvSource({
+            //"204941",
+            "2059000651468115",
+            //"204948"
+    })
+    void existedParcelCsv(String number) throws InterruptedException {
+        HomePage homePage=new HomePage(driver);
+        homePage.setNumber(number);
+        ParcelInfo parcelInfo= homePage.searchParcel();
+        assertThat(parcelInfo.getParcelNumber(),is(number));
+    }
 
+    @Test
+    void loginForParsel(){
+        HomePage homePage=new HomePage(driver);
+        NavPage navPage= homePage.clickNav();
+        LoginPage loginPage=navPage.login();
+        loginPage.gmailLogin();
+        loginPage.setEmail("herasymchuk.anastasiia@chnu.edu.ua");
+        loginPage.goToPassword();
+        loginPage.setPassword("78789878thin");
+        HomePage myPage= loginPage.goToPage();
+        myPage.setNumber("204941");
+        myPage.searchParcel();
+    }
     }
 
 

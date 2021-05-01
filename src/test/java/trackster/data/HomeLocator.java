@@ -10,7 +10,7 @@ public class HomeLocator {
     public static final String SIMPLE_INTERFACE="#root > div > div:nth-child(2) > div > div.jss14 > div:nth-child(2) > span";
     public static final String ARCHIVE_PARSELS="#root > div > div:nth-child(2) > div > div.jss14 > div:nth-child(3) > span";
     public static final String OUR_PARTNERS_HEADER="#root > div > div:nth-child(2) > div > div.jss16 > h4";
-
+    public static final String SEARCH_BUTTON="#root > div > div:nth-child(2) > div > div.jss12 > div > form > button:nth-child(2)";
     public HomeLocator(){
         BrowserConfigure bc = new BrowserConfigure();
 

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import trackster.data.TestBugReport;
+import trackster.data.*;
 
 import java.io.File;
 

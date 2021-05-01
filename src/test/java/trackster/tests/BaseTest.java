@@ -4,7 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import trackster.data.BrowserConfigure;
+import trackster.data.*;
 
 @ExtendWith(TestBugReporting.class)
 public class BaseTest {
@@ -21,7 +21,7 @@ public class BaseTest {
     @AfterAll
     public static void TearDown(){
 
-        driver.close();
+        //driver.close();
     }
 
 //    @AfterEach

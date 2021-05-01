@@ -28,6 +28,8 @@ public class HomePage extends BasePage {
     WebElement achiveParsels;
     @FindBy(css = HomeLocator.OUR_PARTNERS_HEADER)
     WebElement ourPartners;
+    @FindBy(css = HomeLocator.SEARCH_BUTTON)
+    WebElement searchButton;
     //Constructor
     public HomePage(WebDriver driver){
         super(driver);
@@ -63,6 +65,10 @@ public class HomePage extends BasePage {
         String attribute="value";
        return getAttribute(inputNumber,attribute);
 
+    }
+    public ParcelInfo searchParcel(){
+        click(searchButton);
+        return new ParcelInfo(driver);
     }
 
     public String getFastSearchHeader(){
