@@ -10,6 +10,8 @@ public class ParcelInfo extends BasePage {
     WebElement parcelNumber;
 @FindBy(css = ParserInfoLocator.NOT_FOUND)
     WebElement notFoundInfo;
+@FindBy(css = ParserInfoLocator.PARCEL_CARD_INFO)
+WebElement parcelCard;
     public ParcelInfo(WebDriver driver){
         super(driver);
     }

@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import trackster.data.*;
+import trackster.data.ParserInfoLocator;
 import trackster.enums.Language;
 import trackster.models.HomePageTestData;
 import trackster.pages.HomePage;
@@ -15,15 +13,16 @@ import trackster.pages.LoginPage;
 import trackster.pages.NavPage;
 import trackster.pages.ParcelInfo;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 
 public class HomeEventsTest extends BaseTest{
 
-    private static Stream<Arguments> homeData() {
+    private static Stream<Arguments> changeLanguageData() {
 
         return Stream.of(
                 Arguments.of(new HomePageTestData(
@@ -44,43 +43,26 @@ public class HomeEventsTest extends BaseTest{
                         "Наші партнери"))
         );
     }
-    @Test
-    public void testGuru99TakeScreenShot() throws Exception{
-
-
-        HomePage homePage=new HomePage(driver);
-
-        //takeSnapShot(driver, "C:\\Users\\Admin\\Desktop\\screen\\test.png") ;
-
-    }
-
-
-
-
-
-//    @BeforeEach
-//    public  void setUp(){
-//
-//    }
-
     @ParameterizedTest
-    @MethodSource("homeData")
-    public void shouldBeAbleToAddValues(HomePageTestData homeModel) {
-
+    @MethodSource("changeLanguageData")
+    public void changeLanguage(HomePageTestData homeModel) {
         Integer language=homeModel.getLanguage();
         String parcelHeader=homeModel.getParcelHeader();
         String number=homeModel.getNumber();
         String fastTracking= homeModel.getFastTracking();
         String intuitiveInterface= homeModel.getIntuitiveInterface();
-        String archiveParsels= homeModel.getArchiveParsels();
+        String archiveParcels= homeModel.getArchiveParsels();
         String ourPartners=homeModel.getOurPartners();
         HomePage homePage=new HomePage(driver);
+        assertThat(homePage.isButtonLanguagePresent(),is(true));
+        assertThat(homePage.isListLanguagePresent(),is(false));
         homePage.changeLanguage(language);
-        assertThat(homePage.getParselHeader(),is(parcelHeader));
-        assertThat(homePage.getInputPlaceholderr(),is(number));
+        assertThat(homePage.isListLanguagePresent(),is(false));
+        assertThat(homePage.getParcelHeader(),is(parcelHeader));
+        assertThat(homePage.getInputPlaceholder(),is(number));
         assertThat(homePage.getFastSearchHeader(),is(fastTracking));
-        assertThat(homePage.getSimpleInterface(),is(not(intuitiveInterface)));
-        assertThat(homePage.getArchiveParsels(),is(archiveParsels));
+        assertThat(homePage.getSimpleInterface(),is(intuitiveInterface));
+        assertThat(homePage.getArchiveParcels(),is(archiveParcels));
         assertThat(homePage.getOurPartners(),is(ourPartners));
     }
 
@@ -88,7 +70,10 @@ public class HomeEventsTest extends BaseTest{
     @CsvFileSource(files = trackster.data.CsvFileSource.EXISTED_PARCEL, numLinesToSkip = 1)
     void existedParcel(String number){
         HomePage homePage=new HomePage(driver);
+        assertThat(homePage.isInputEnabled(),is(true));
+        assertThat(homePage.isSearchButtonEnabled(),is(false));
         homePage.setNumber(number);
+        assertThat(homePage.isSearchButtonEnabled(),is(true));
         ParcelInfo parcelInfo= homePage.searchParcel();
         assertThat(parcelInfo.getParcelNumber(),is(number));
     }
@@ -96,7 +81,10 @@ public class HomeEventsTest extends BaseTest{
     @CsvFileSource(files = trackster.data.CsvFileSource.NOT_EXISTED_PARCEL, numLinesToSkip = 1)
     void notExistedParcel(String number){
         HomePage homePage=new HomePage(driver);
+        assertThat(homePage.isInputEnabled(),is(true));
+        assertThat(homePage.isSearchButtonEnabled(),is(false));
         homePage.setNumber(number);
+        assertThat(homePage.isSearchButtonEnabled(),is(true));
         ParcelInfo parcelInfo= homePage.searchParcel();
         assertThat(parcelInfo.notFoundInfo(),is(ParserInfoLocator.NOT_FOUND_INFO));
     }
@@ -104,25 +92,17 @@ public class HomeEventsTest extends BaseTest{
     @CsvFileSource(files = trackster.data.CsvFileSource.INCORRECT_PARCEL_NUMBER, numLinesToSkip = 1)
     void incorrectParcelNumber(String number){
         HomePage homePage=new HomePage(driver);
+        assertThat(homePage.isInputEnabled(),is(true));
+        assertThat(homePage.isSearchButtonEnabled(),is(false));
         homePage.setNumber(number);
+        assertThat(homePage.isSearchButtonEnabled(),is(true));
         ParcelInfo parcelInfo= homePage.searchParcel();
         assertThat(parcelInfo.notFoundInfo(),is(ParserInfoLocator.INCORRECT_PARCEL_NUMBER));
     }
-    @ParameterizedTest
-    @CsvSource({
-            //"204941",
-            "2059000651468115",
-            //"204948"
-    })
-    void existedParcelCsv(String number) throws InterruptedException {
-        HomePage homePage=new HomePage(driver);
-        homePage.setNumber(number);
-        ParcelInfo parcelInfo= homePage.searchParcel();
-        assertThat(parcelInfo.getParcelNumber(),is(number));
-    }
+
 
     @Test
-    void loginForParsel(){
+    void loginForParcel(){
         HomePage homePage=new HomePage(driver);
         NavPage navPage= homePage.clickNav();
         LoginPage loginPage=navPage.login();
@@ -134,6 +114,30 @@ public class HomeEventsTest extends BaseTest{
         myPage.setNumber("204941");
         myPage.searchParcel();
     }
+    private static Stream<Arguments> photoData() {
+
+        return Stream.of(
+                Arguments.of(new ArrayList<String>(){
+                        {
+                                add("nova-poshta");
+                                add("justin");
+                                add("dhl");
+                        }
+                                                    })
+
+                         );
+    }
+    @ParameterizedTest
+    @MethodSource("photoData")
+    void defaultValues(ArrayList<String> photos){
+        HomePage homePage=new HomePage(driver);
+        assertThat(homePage.isFindParcelPresent(),is(true));
+        assertThat(homePage.isAboutTrackerPresent(photos),is(true));
+        assertThat(homePage.isHeaderPresent(),is(true));
+
+
+    }
+
     }
 
 

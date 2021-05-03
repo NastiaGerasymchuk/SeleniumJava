@@ -8,81 +8,103 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+
 public class HomePage extends BasePage {
 
 
     private static String PAGE_URL= SiteConfigure.URL;
-    @FindBy(css = HomeLocator.LANGUAGE)
-    WebElement language;
-    @FindBy(css = HomeLocator.NAV_BTN)
-    WebElement navBtn;
-    @FindBy(css = HomeLocator.FIND_PARSEL_HEADER)
-    WebElement parselHeader;
-    @FindBy(css = HomeLocator.INPUT_NUMBER)
-    WebElement inputNumber;
-    @FindBy(css = HomeLocator.QUICK_SEARCH)
-    WebElement quickSearchHeader;
-    @FindBy(css = HomeLocator.SIMPLE_INTERFACE)
-    WebElement simpleInterface;
-    @FindBy(css = HomeLocator.ARCHIVE_PARSELS)
-    WebElement achiveParsels;
-    @FindBy(css = HomeLocator.OUR_PARTNERS_HEADER)
-    WebElement ourPartners;
-    @FindBy(css = HomeLocator.SEARCH_BUTTON)
-    WebElement searchButton;
+    private FindParcelMain findParcel;
+    private AboutTrackerFooter aboutTracker;
+    private Header header;
+
+//    @FindBy(css = HomeLocator.FIND_PARSEL_HEADER)
+//    WebElement parselHeader;
+//    @FindBy(css = HomeLocator.INPUT_NUMBER)
+//    WebElement inputNumber;
+
+
+//    @FindBy(css = HomeLocator.QUICK_SEARCH)
+//    WebElement quickSearchHeader;
+//    @FindBy(css = HomeLocator.SIMPLE_INTERFACE)
+//    WebElement simpleInterface;
+//    @FindBy(css = HomeLocator.ARCHIVE_PARSELS)
+//    WebElement achiveParsels;
+//    @FindBy(css = HomeLocator.OUR_PARTNERS_HEADER)
+//    WebElement ourPartners;
+
+
+
+//    @FindBy(css = HomeLocator.SEARCH_BUTTON)
+//    WebElement searchButton;
     //Constructor
     public HomePage(WebDriver driver){
         super(driver);
         this.driver.get(PAGE_URL);
+        findParcel=new FindParcelMain(driver);
+        aboutTracker=new AboutTrackerFooter(driver);
+        header=new Header(driver);
 
     }
     public HomePage changeLanguage(Integer languageName){
-        wait.until(ExpectedConditions.visibilityOf(language));
-        language.click();
-        String urlString = String.format(HomeLocator.LANGUAGE_ITEMS, languageName);
-        By lang=By.cssSelector(urlString);
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(lang)));
-        WebElement webElement=driver.findElement(lang);
-        webElement.click();
-        return new HomePage(driver);
+        return header.changeLanguage(languageName);
+    }
+    public boolean isButtonLanguagePresent(){
+        return header.isButtonLanguagePresent();
+    }
+    public boolean isListLanguagePresent(){
+        return header.isListLanguagePresent();
+    }
+    public boolean isInputEnabled(){
+        return findParcel.isInputEnabled();
+    }
+    public boolean isSearchButtonEnabled(){
+        return findParcel.isSearchEnabled();
     }
     public NavPage clickNav(){
-        click(navBtn);
-        return new NavPage(driver);
+        return header.clickNav();
     }
-    public String getParselHeader(){
-      return getText(parselHeader);
+    public String getParcelHeader(){
+
+        return findParcel.getParcelHeader();
     }
-    public String getInputPlaceholderr(){
-        String attribute="placeholder";
-        return getAttribute(inputNumber,attribute);
+    public String getInputPlaceholder(){
+        return findParcel.getInputPlaceholder();
     }
-    public  HomePage setNumber(String number){
-       sendKeys(inputNumber,number);
-        return this;
+    public FindParcelMain setNumber(String number){
+        return findParcel.setNumber(number);
     }
     public  String trackNumber(){
-        String attribute="value";
-       return getAttribute(inputNumber,attribute);
+        return findParcel.trackNumber();
 
     }
     public ParcelInfo searchParcel(){
-        click(searchButton);
-        return new ParcelInfo(driver);
+        return findParcel.searchParcel();
+    }
+    public boolean isFindParcelPresent(){
+        return findParcel.allElementsPresent();
     }
 
     public String getFastSearchHeader(){
-        return getText(quickSearchHeader);
+        return aboutTracker.getFastSearchHeader();
     }
     public String getSimpleInterface(){
-        return getText(simpleInterface);
+        return aboutTracker.getSimpleInterface();
     }
-    public String getArchiveParsels(){
-        return getText(achiveParsels);
+    public String getArchiveParcels(){
+        return aboutTracker.getArchiveParcels();
     }
     public String getOurPartners(){
-        return getText(ourPartners);
+        return aboutTracker.getOurPartners();
     }
+    public boolean isAboutTrackerPresent(ArrayList<String> photos){
+        return aboutTracker.isAboutTrackerPresent(photos);
+    }
+    public boolean isHeaderPresent(){
+        return header.isBeginState();
+    }
+
+
 
 
 
