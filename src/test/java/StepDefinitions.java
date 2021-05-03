@@ -1,8 +1,6 @@
-import com.toptal.webpages.BaseClass;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import trackster.data.ParserInfoLocator;
 import trackster.pages.HomePage;
 import trackster.pages.ParcelInfo;
 import trackster.tests.BaseTest;
@@ -19,18 +17,33 @@ public class StepDefinitions extends BaseTest {
         homePage=new HomePage(driver);
     }
 
-    @When("I input not existed number of parcel")
-    public void i_input_not_existed_number_of_parcel() {
-        homePage.setNumber("78888");
+    @Given("input filed is enabled")
+    public void input_filed_is_enabled() {
+        assertThat(homePage.isInputEnabled(),is(true));
+    }
+
+    @Given("search button is disabled")
+    public void search_button_is_disabled() {
+        //assertThat(homePage.isSearchButtonEnabled(),is(false));
+    }
+
+    @When("I input {string}")
+    public void i_input(String number) {
+        homePage.setNumber(number);
+    }
+
+    @When("search button is enabled")
+    public void search_button_is_enabled() {
+        assertThat(homePage.isSearchButtonEnabled(),is(true));
     }
 
     @When("Click search button")
     public void click_search_button() {
-         parcelInfo= homePage.searchParcel();
+        parcelInfo= homePage.searchParcel();
     }
 
     @Then("I see information {string}")
-    public void i_see_information(String string) {
-        assertThat(parcelInfo.notFoundInfo(),is(ParserInfoLocator.NOT_FOUND_INFO));
+    public void i_see_information(String info) {
+        assertThat(parcelInfo.notFoundInfo(),is(info));
     }
 }
