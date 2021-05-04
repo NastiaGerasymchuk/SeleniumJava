@@ -21,7 +21,7 @@ public class BaseTest {
     @AfterAll
     public static void TearDown(){
 
-        //driver.close();
+        driver.close();
     }
 
 //    @AfterEach
