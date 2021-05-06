@@ -1,7 +1,9 @@
 package trackster.models;
 
+import trackster.enums.Language;
+
 public class HomePageTestData {
-    private Integer language;//enum
+    private Language language;//enum
     private String parcelHeader;
     private String number;
     private String fastTracking;
@@ -9,7 +11,7 @@ public class HomePageTestData {
     private String archiveParsels;
     private String ourPartners;
 
-    public HomePageTestData(Integer language, String parcelHeader, String number, String fastTracking, String intuitiveInterface, String archiveParsels, String ourPartners){
+    public HomePageTestData(Language language, String parcelHeader, String number, String fastTracking, String intuitiveInterface, String archiveParsels, String ourPartners){
 
         this.language =language;
         this.parcelHeader =parcelHeader;
@@ -20,7 +22,7 @@ public class HomePageTestData {
         this.ourPartners =ourPartners;
 
     }
-    public Integer getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 

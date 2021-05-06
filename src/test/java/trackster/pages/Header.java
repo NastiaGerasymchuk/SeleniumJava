@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import trackster.data.*;
+import trackster.enums.Language;
 
 public class Header extends BasePage{
     @FindBy(css = HeaderLocator.LANGUAGE)
@@ -15,10 +16,11 @@ public class Header extends BasePage{
     public Header(WebDriver driver){
         super(driver);
     }
-    public HomePage changeLanguage(Integer languageName){
+    public HomePage changeLanguage(Language languageName){
         wait.until(ExpectedConditions.visibilityOf(language));
         language.click();
-        String urlString = String.format(HeaderLocator.LANGUAGE_ITEMS, languageName);
+        Integer languageNumber=languageName.getProgrammerCode();
+        String urlString = String.format(HeaderLocator.LANGUAGE_ITEMS, languageNumber);
         By lang=By.cssSelector(urlString);
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(lang)));
         WebElement webElement=driver.findElement(lang);

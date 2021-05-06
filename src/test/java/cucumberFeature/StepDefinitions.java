@@ -2,6 +2,7 @@ package cucumberFeature;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import trackster.enums.Language;
 import trackster.pages.HomePage;
 import trackster.pages.ParcelInfo;
 import trackster.tests.BaseTest;
@@ -64,7 +65,7 @@ public class StepDefinitions extends BaseTest {
     }
 
     @When("Select one of the language from {int}")
-    public void select_one_of_the_language_from(Integer language) {
+    public void select_one_of_the_language_from(Language language) {
         homePage.changeLanguage(language);
         //assertThat(homePage.isListLanguagePresent(),is(false));
     }
@@ -84,7 +85,7 @@ public class StepDefinitions extends BaseTest {
     public void i_see_information_about_all_partners_of_tracks(io.cucumber.datatable.DataTable dataTable) {
 
         List<String> res = dataTable.column(0);
-        ArrayList<String> photos = new ArrayList<String>(res);
+        List<String> photos = new ArrayList<>(res);
         assertThat(homePage.isFindParcelPresent(),is(true));
         assertThat(homePage.isAboutTrackerPresent(photos),is(true));
         assertThat(homePage.isHeaderPresent(),is(true));

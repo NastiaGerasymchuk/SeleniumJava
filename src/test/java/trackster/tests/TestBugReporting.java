@@ -14,8 +14,8 @@ public class TestBugReporting extends BaseTest implements TestWatcher {
 
     @Override
     public void testFailed(ExtensionContext extensionContext, Throwable throwable) {
-
-        String screenName= TestBugReport.SCREEN_PATH+extensionContext.getDisplayName();
+        String photoName="full_path_"+extensionContext.getRequiredTestMethod()+"_order_id_"+extensionContext.getDisplayName()+TestBugReport.PHOTO_EXTENSION;
+        String screenName= TestBugReport.SCREEN_PATH+photoName;
         try {
             takeSnapShot(screenName);
         } catch (Exception e) {

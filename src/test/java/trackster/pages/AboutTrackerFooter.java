@@ -48,14 +48,14 @@ public class AboutTrackerFooter extends BasePage{
         By locator=By.cssSelector(AboutTrackerLocator.FOOTER);
         return isVisible(locator);
     }
-    public boolean isAboutTrackerPresent(ArrayList<String> photos){
+    public boolean isAboutTrackerPresent(List<String> photos){
         return isHeaderPresent()&&
                 isMainPresent()&&
                 isFooterPresent()&&
                 isImagesEquals(photos);
                 
     }
-    private boolean isImagesEquals(ArrayList<String> photos){
+    private boolean isImagesEquals(List<String> photos){
         ArrayList<String> isPresent= getValuesByAttribute(images,"alt");
         Collections.sort(isPresent);
         Collections.sort(photos);

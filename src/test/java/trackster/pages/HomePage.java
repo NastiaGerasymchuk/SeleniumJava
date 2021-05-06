@@ -7,8 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import trackster.enums.Language;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomePage extends BasePage {
 
@@ -46,7 +48,7 @@ public class HomePage extends BasePage {
         header=new Header(driver);
 
     }
-    public HomePage changeLanguage(Integer languageName){
+    public HomePage changeLanguage(Language languageName){
         return header.changeLanguage(languageName);
     }
     public boolean isButtonLanguagePresent(){
@@ -97,7 +99,7 @@ public class HomePage extends BasePage {
     public String getOurPartners(){
         return aboutTracker.getOurPartners();
     }
-    public boolean isAboutTrackerPresent(ArrayList<String> photos){
+    public boolean isAboutTrackerPresent(List<String> photos){
         return aboutTracker.isAboutTrackerPresent(photos);
     }
     public boolean isHeaderPresent(){

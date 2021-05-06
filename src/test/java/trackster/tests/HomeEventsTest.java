@@ -26,7 +26,7 @@ public class HomeEventsTest extends BaseTest{
 
         return Stream.of(
                 Arguments.of(new HomePageTestData(
-                        Language.ENGLISH.getProgrammerCode(),
+                        Language.ENGLISH,
                         "Find your parcel just in one moment",
                         "Track number",
                         "Fast tracking",
@@ -34,7 +34,7 @@ public class HomeEventsTest extends BaseTest{
                         "Archive Parcels",
                         "Our Partners")),
                 Arguments.of(new HomePageTestData(
-                        Language.UKRAINIAN.getProgrammerCode(),
+                        Language.UKRAINIAN,
                         "Знайдіть вашу посилку в один клік",
                         "Трек номер",
                         "Швидкий пошук",
@@ -46,7 +46,7 @@ public class HomeEventsTest extends BaseTest{
     @ParameterizedTest
     @MethodSource("changeLanguageData")
     public void changeLanguage(HomePageTestData homeModel) {
-        Integer language=homeModel.getLanguage();
+        Language language=homeModel.getLanguage();
         String parcelHeader=homeModel.getParcelHeader();
         String number=homeModel.getNumber();
         String fastTracking= homeModel.getFastTracking();
