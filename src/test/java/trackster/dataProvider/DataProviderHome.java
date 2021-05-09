@@ -10,7 +10,7 @@ public class DataProviderHome
     public static Object[][] dataProviderMethod()
     {
         return new Object[][] { { new HomePageTestData(
-                                    Language.ENGLISH.getProgrammerCode(),
+                                    Language.ENGLISH,
                                     "Find your parcel just in one moment",
                                     "Track number",
                                     "Fast tracking",
@@ -18,7 +18,7 @@ public class DataProviderHome
                                     "Archive Parcels",
                                     "Our Partners")},
                                     {new HomePageTestData(
-                                     Language.UKRAINIAN.getProgrammerCode(),
+                                     Language.UKRAINIAN,
                                      "Знайдіть вашу посилку в один клік",
                                      "Трек номер",
                                      "Швидкий пошук",

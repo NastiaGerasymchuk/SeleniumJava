@@ -11,7 +11,7 @@ public class LanguageData {
 
         return Stream.of(
                 Arguments.of(new HomePageTestData(
-                        Language.ENGLISH.getProgrammerCode(),
+                        Language.ENGLISH,
                         "Find your parcel just in one moment",
                         "Track number",
                         "Fast tracking",
@@ -19,7 +19,7 @@ public class LanguageData {
                         "Archive Parcels",
                         "Our Partners")),
                 Arguments.of(new HomePageTestData(
-                        Language.UKRAINIAN.getProgrammerCode(),
+                        Language.UKRAINIAN,
                         "Знайдіть вашу посилку в один клік",
                         "Трек номер",
                         "Швидкий пошук",

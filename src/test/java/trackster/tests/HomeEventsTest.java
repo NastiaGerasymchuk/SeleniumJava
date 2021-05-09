@@ -1,5 +1,6 @@
 package trackster.tests;
 
+import io.qameta.allure.Epic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,8 +19,12 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+@Epic("Login Tests Epic")
+@Feature("Invalid Login Features")
 public class HomeEventsTest extends BaseTest{
 
     private static Stream<Arguments> changeLanguageData() {
@@ -45,6 +50,8 @@ public class HomeEventsTest extends BaseTest{
     }
     @ParameterizedTest
     @MethodSource("changeLanguageData")
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     public void changeLanguage(HomePageTestData homeModel) {
         Language language=homeModel.getLanguage();
         String parcelHeader=homeModel.getParcelHeader();
@@ -68,6 +75,8 @@ public class HomeEventsTest extends BaseTest{
 
     @ParameterizedTest
     @CsvFileSource(files = trackster.data.CsvFileSource.EXISTED_PARCEL, numLinesToSkip = 1)
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     void existedParcel(String number){
         HomePage homePage=new HomePage(driver);
         assertThat(homePage.isInputEnabled(),is(true));
@@ -79,6 +88,8 @@ public class HomeEventsTest extends BaseTest{
     }
     @ParameterizedTest
     @CsvFileSource(files = trackster.data.CsvFileSource.NOT_EXISTED_PARCEL, numLinesToSkip = 1)
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     void notExistedParcel(String number){
         HomePage homePage=new HomePage(driver);
         assertThat(homePage.isInputEnabled(),is(true));
@@ -90,6 +101,8 @@ public class HomeEventsTest extends BaseTest{
     }
     @ParameterizedTest
     @CsvFileSource(files = trackster.data.CsvFileSource.INCORRECT_PARCEL_NUMBER, numLinesToSkip = 1)
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     void incorrectParcelNumber(String number){
         HomePage homePage=new HomePage(driver);
         assertThat(homePage.isInputEnabled(),is(true));
@@ -102,6 +115,8 @@ public class HomeEventsTest extends BaseTest{
 
 
     @Test
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     void loginForParcel(){
         HomePage homePage=new HomePage(driver);
         NavPage navPage= homePage.clickNav();
@@ -129,6 +144,8 @@ public class HomeEventsTest extends BaseTest{
     }
     @ParameterizedTest
     @MethodSource("photoData")
+    @Story("User tries to login the system with invalid username and invalid password.")
+    @Description("Invalid Login Test with Invalid Username and Invalid Password.")
     void defaultValues(ArrayList<String> photos){
         HomePage homePage=new HomePage(driver);
         assertThat(homePage.isFindParcelPresent(),is(true));
@@ -137,7 +154,14 @@ public class HomeEventsTest extends BaseTest{
 
 
     }
-
+//    @Test
+//    void defaultValues1(){
+//        HomePage homePage=new HomePage(driver);
+//        this.driver.get("https://eventsexpress-test.azurewebsites.net/home/events?page=1&status=active");
+//
+//
+//
+//    }
     }
 
 
